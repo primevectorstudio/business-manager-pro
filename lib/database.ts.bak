@@ -1,12 +1,8 @@
 import * as SQLite from 'expo-sqlite';
 import { v4 as uuidv4 } from 'uuid';
-import { Platform } from 'react-native';
 
-// Initialize database (only on native platforms)
-let db: ReturnType<typeof SQLite.openDatabaseSync> | null = null;
-if (Platform.OS !== 'web') {
-  db = SQLite.openDatabaseSync('business-manager.db');
-}
+// Initialize database
+const db = SQLite.openDatabaseSync('business-manager.db');
 
 export interface Product {
   id: string;
@@ -73,7 +69,6 @@ export interface Customer {
 // Initialize database tables
 export async function initializeDatabase() {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     // Products table
     await db.execAsync(`
       CREATE TABLE IF NOT EXISTS products (
@@ -163,7 +158,6 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt' | 'up
   };
 
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.runAsync(
       `INSERT INTO products (id, barcode, name, costPrice, sellingPrice, quantity, reorderLevel, unit, category, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -190,7 +184,6 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt' | 'up
 
 export async function getProduct(id: string): Promise<Product | null> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getFirstAsync<Product>(
       'SELECT * FROM products WHERE id = ?',
       [id]
@@ -204,7 +197,6 @@ export async function getProduct(id: string): Promise<Product | null> {
 
 export async function getProductByBarcode(barcode: string): Promise<Product | null> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getFirstAsync<Product>(
       'SELECT * FROM products WHERE barcode = ?',
       [barcode]
@@ -218,7 +210,6 @@ export async function getProductByBarcode(barcode: string): Promise<Product | nu
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getAllAsync<Product>(
       'SELECT * FROM products ORDER BY name ASC'
     );
@@ -231,7 +222,6 @@ export async function getAllProducts(): Promise<Product[]> {
 
 export async function searchProducts(query: string): Promise<Product[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const searchTerm = `%${query}%`;
     const result = await db.getAllAsync<Product>(
       'SELECT * FROM products WHERE name LIKE ? OR barcode LIKE ? ORDER BY name ASC',
@@ -255,7 +245,6 @@ export async function updateProduct(id: string, updates: Partial<Omit<Product, '
       updatedAt: Date.now(),
     };
 
-    if (!db) throw new Error('Database not available on web platform');
     await db.runAsync(
       `UPDATE products SET barcode = ?, name = ?, costPrice = ?, sellingPrice = ?, quantity = ?, reorderLevel = ?, unit = ?, category = ?, updatedAt = ?
        WHERE id = ?`,
@@ -282,7 +271,6 @@ export async function updateProduct(id: string, updates: Partial<Omit<Product, '
 
 export async function deleteProduct(id: string): Promise<boolean> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.runAsync('DELETE FROM products WHERE id = ?', [id]);
     return true;
   } catch (error) {
@@ -293,7 +281,6 @@ export async function deleteProduct(id: string): Promise<boolean> {
 
 export async function getLowStockProducts(threshold?: number): Promise<Product[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getAllAsync<Product>(
       'SELECT * FROM products WHERE quantity <= reorderLevel ORDER BY quantity ASC'
     );
@@ -315,7 +302,6 @@ export async function addSale(sale: Omit<Sale, 'id' | 'createdAt'>): Promise<Sal
   };
 
   try {
-      if (!db) throw new Error("Database not available on web platform");
     // Add sale record
     await db.runAsync(
       `INSERT INTO sales (id, itemsJson, subtotal, discount, tax, total, paymentMethod, createdAt)
@@ -357,7 +343,6 @@ export async function addSale(sale: Omit<Sale, 'id' | 'createdAt'>): Promise<Sal
 
 export async function getSale(id: string): Promise<Sale | null> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getFirstAsync<any>(
       'SELECT * FROM sales WHERE id = ?',
       [id]
@@ -376,7 +361,6 @@ export async function getSale(id: string): Promise<Sale | null> {
 
 export async function getAllSales(): Promise<Sale[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const results = await db.getAllAsync<any>(
       'SELECT * FROM sales ORDER BY createdAt DESC'
     );
@@ -392,7 +376,6 @@ export async function getAllSales(): Promise<Sale[]> {
 
 export async function getSalesByDateRange(startDate: number, endDate: number): Promise<Sale[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const results = await db.getAllAsync<any>(
       'SELECT * FROM sales WHERE createdAt >= ? AND createdAt <= ? ORDER BY createdAt DESC',
       [startDate, endDate]
@@ -418,7 +401,6 @@ export async function addExpense(expense: Omit<Expense, 'id' | 'createdAt'>): Pr
   };
 
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.runAsync(
       `INSERT INTO expenses (id, category, description, amount, createdAt)
        VALUES (?, ?, ?, ?, ?)`,
@@ -433,7 +415,6 @@ export async function addExpense(expense: Omit<Expense, 'id' | 'createdAt'>): Pr
 
 export async function getExpensesByDateRange(startDate: number, endDate: number): Promise<Expense[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const results = await db.getAllAsync<Expense>(
       'SELECT * FROM expenses WHERE createdAt >= ? AND createdAt <= ? ORDER BY createdAt DESC',
       [startDate, endDate]
@@ -447,7 +428,6 @@ export async function getExpensesByDateRange(startDate: number, endDate: number)
 
 export async function deleteExpense(id: string): Promise<boolean> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.runAsync('DELETE FROM expenses WHERE id = ?', [id]);
     return true;
   } catch (error) {
@@ -467,7 +447,6 @@ export async function addStockAdjustment(adjustment: Omit<StockAdjustment, 'id' 
   };
 
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.runAsync(
       `INSERT INTO stockAdjustments (id, productId, quantityChange, reason, createdAt)
        VALUES (?, ?, ?, ?, ?)`,
@@ -482,7 +461,6 @@ export async function addStockAdjustment(adjustment: Omit<StockAdjustment, 'id' 
 
 export async function getStockAdjustmentsByProduct(productId: string): Promise<StockAdjustment[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const results = await db.getAllAsync<StockAdjustment>(
       'SELECT * FROM stockAdjustments WHERE productId = ? ORDER BY createdAt DESC',
       [productId]
@@ -497,7 +475,6 @@ export async function getStockAdjustmentsByProduct(productId: string): Promise<S
 // Analytics operations
 export async function getTotalInventoryValue(): Promise<number> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getFirstAsync<{ total: number }>(
       'SELECT SUM(quantity * costPrice) as total FROM products'
     );
@@ -510,7 +487,6 @@ export async function getTotalInventoryValue(): Promise<number> {
 
 export async function getDailySalesTotal(date: number): Promise<number> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const startOfDay = Math.floor(date / 86400000) * 86400000;
     const endOfDay = startOfDay + 86400000;
 
@@ -527,7 +503,6 @@ export async function getDailySalesTotal(date: number): Promise<number> {
 
 export async function getMonthlySalesTotal(year: number, month: number): Promise<number> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const startDate = new Date(year, month - 1, 1).getTime();
     const endDate = new Date(year, month, 1).getTime();
 
@@ -544,7 +519,6 @@ export async function getMonthlySalesTotal(year: number, month: number): Promise
 
 export async function getMonthlyExpensesTotal(year: number, month: number): Promise<number> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const startDate = new Date(year, month - 1, 1).getTime();
     const endDate = new Date(year, month, 1).getTime();
 
@@ -561,7 +535,6 @@ export async function getMonthlyExpensesTotal(year: number, month: number): Prom
 
 export async function getTopSellingProducts(limit: number = 10): Promise<any[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     // This is a simplified version - in production, you'd want to aggregate from sales items
     const results = await db.getAllAsync<any>(
       'SELECT * FROM products ORDER BY quantity DESC LIMIT ?',
@@ -586,7 +559,6 @@ export async function addCustomer(customer: Omit<Customer, 'id' | 'createdAt' | 
   };
 
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.runAsync(
       `INSERT INTO customers (id, name, phone, email, loyaltyPoints, totalSpent, purchaseCount, lastPurchaseDate, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -612,7 +584,6 @@ export async function addCustomer(customer: Omit<Customer, 'id' | 'createdAt' | 
 
 export async function getAllCustomers(): Promise<Customer[]> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const results = await db.getAllAsync<Customer>('SELECT * FROM customers ORDER BY totalSpent DESC');
     return results;
   } catch (error) {
@@ -623,7 +594,6 @@ export async function getAllCustomers(): Promise<Customer[]> {
 
 export async function getCustomerById(id: string): Promise<Customer | null> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getFirstAsync<Customer>('SELECT * FROM customers WHERE id = ?', [id]);
     return result || null;
   } catch (error) {
@@ -634,7 +604,6 @@ export async function getCustomerById(id: string): Promise<Customer | null> {
 
 export async function getCustomerByPhone(phone: string): Promise<Customer | null> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const result = await db.getFirstAsync<Customer>('SELECT * FROM customers WHERE phone = ?', [phone]);
     return result || null;
   } catch (error) {
@@ -654,7 +623,6 @@ export async function updateCustomer(id: string, updates: Partial<Omit<Customer,
       updatedAt: Date.now(),
     };
 
-    if (!db) throw new Error('Database not available on web platform');
     await db.runAsync(
       `UPDATE customers SET name = ?, phone = ?, email = ?, loyaltyPoints = ?, totalSpent = ?, purchaseCount = ?, lastPurchaseDate = ?, updatedAt = ?
        WHERE id = ?`,
@@ -693,7 +661,6 @@ export async function addLoyaltyPoints(customerId: string, points: number): Prom
 
 export async function deleteCustomer(id: string): Promise<boolean> {
   try {
-    if (!db) throw new Error('Database not available on web platform');
     await db.runAsync('DELETE FROM customers WHERE id = ?', [id]);
     return true;
   } catch (error) {
@@ -704,7 +671,6 @@ export async function deleteCustomer(id: string): Promise<boolean> {
 
 export async function clearAllData(): Promise<boolean> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     await db.execAsync('DELETE FROM sales; DELETE FROM expenses; DELETE FROM stockAdjustments; DELETE FROM products; DELETE FROM customers;');
     return true;
   } catch (error) {
@@ -715,7 +681,6 @@ export async function clearAllData(): Promise<boolean> {
 
 export async function exportData(): Promise<string> {
   try {
-      if (!db) throw new Error("Database not available on web platform");
     const products = await getAllProducts();
     const sales = await getAllSales();
     const expenses = await db.getAllAsync<Expense>('SELECT * FROM expenses');
