@@ -2,9 +2,32 @@ import { create } from 'zustand';
 import { Product, Sale, Expense } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Currency mapping by country
+export const COUNTRY_CURRENCY_MAP: Record<string, { code: string; symbol: string }> = {
+  'India': { code: 'INR', symbol: '₹' },
+  'Pakistan': { code: 'PKR', symbol: '₨' },
+  'Bangladesh': { code: 'BDT', symbol: '৳' },
+  'UAE': { code: 'AED', symbol: 'د.إ' },
+  'Saudi Arabia': { code: 'SAR', symbol: '﷼' },
+  'USA': { code: 'USD', symbol: '$' },
+  'UK': { code: 'GBP', symbol: '£' },
+  'Canada': { code: 'CAD', symbol: 'C$' },
+  'Australia': { code: 'AUD', symbol: 'A$' },
+  'Nepal': { code: 'NPR', symbol: 'Rs' },
+  'Sri Lanka': { code: 'LKR', symbol: 'Rs' },
+  'Malaysia': { code: 'MYR', symbol: 'RM' },
+  'Singapore': { code: 'SGD', symbol: 'S$' },
+  'South Africa': { code: 'ZAR', symbol: 'R' },
+  'Kenya': { code: 'KES', symbol: 'KSh' },
+  'Nigeria': { code: 'NGN', symbol: '₦' },
+};
+
 interface AppSettings {
   businessName: string;
   currency: string;
+  currencySymbol: string;
+  country: string;
+  language: string;
   taxPercentage: number;
   lowStockThreshold: number;
   notificationsEnabled: boolean;
@@ -40,7 +63,10 @@ interface AppStore {
 
 const defaultSettings: AppSettings = {
   businessName: 'My Business',
-  currency: '$',
+  currency: 'USD',
+  currencySymbol: '$',
+  country: 'USA',
+  language: 'English',
   taxPercentage: 0,
   lowStockThreshold: 5,
   notificationsEnabled: true,
@@ -69,6 +95,31 @@ export const useAppStore = create<AppStore>((set) => ({
       if (stored) {
         const settings = JSON.parse(stored);
         set({ settings });
+      }
+      
+      // Also load country and language from onboarding if available
+      const country = await AsyncStorage.getItem('user_country');
+      const language = await AsyncStorage.getItem('user_language');
+      
+      if (country || language) {
+        const updates: Partial<AppSettings> = {};
+        
+        if (country) {
+          updates.country = country;
+          const currencyInfo = COUNTRY_CURRENCY_MAP[country];
+          if (currencyInfo) {
+            updates.currency = currencyInfo.code;
+            updates.currencySymbol = currencyInfo.symbol;
+          }
+        }
+        
+        if (language) {
+          updates.language = language;
+        }
+        
+        set((state) => ({
+          settings: { ...state.settings, ...updates },
+        }));
       }
     } catch (error) {
       console.error('Error loading settings:', error);

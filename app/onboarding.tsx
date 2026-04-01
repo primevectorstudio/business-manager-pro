@@ -16,6 +16,7 @@ import { ScreenContainer } from '@/components/screen-container';
 import { useColors } from '@/hooks/use-colors';
 import { useAppStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/lib/translations';
 
 const COUNTRIES = [
   { name: 'India', flag: '🇮🇳' },
@@ -60,9 +61,10 @@ export default function OnboardingScreen() {
   const [currentStep, setCurrentStep] = useState(1);
   const [businessName, setBusinessName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>('English');
   const [searchQuery, setSearchQuery] = useState('');
   const { updateSettings } = useAppStore();
+  const t = useTranslation(selectedLanguage || 'English');
 
   const filteredCountries = COUNTRIES.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -82,12 +84,12 @@ export default function OnboardingScreen() {
   const handleNext = () => {
     if (currentStep === 2) {
       if (!businessName.trim()) {
-        Alert.alert('Error', 'Please enter your business name');
+        Alert.alert(t('error'), t('business_name_required'));
         return;
       }
     } else if (currentStep === 3) {
       if (!selectedCountry) {
-        Alert.alert('Error', 'Please select your country');
+        Alert.alert(t('error'), t('country_required'));
         return;
       }
     }
@@ -132,7 +134,7 @@ export default function OnboardingScreen() {
 
       {/* Step indicator */}
       <Text className="text-center text-sm text-muted mb-6">
-        Step {currentStep} of 4
+        {t('step_of')} {currentStep} {t('of')} 4
       </Text>
 
       {/* Screen 1: Welcome */}
@@ -146,10 +148,10 @@ export default function OnboardingScreen() {
             />
             <View className="gap-3">
               <Text className="text-3xl font-bold text-foreground text-center">
-                Welcome to Business Manager Pro
+                {t('welcome_title')}
               </Text>
               <Text className="text-base text-muted text-center leading-relaxed">
-                Complete business management — inventory, sales, reports & more
+                {t('welcome_subtitle')}
               </Text>
             </View>
             <TouchableOpacity
@@ -157,7 +159,7 @@ export default function OnboardingScreen() {
               className="bg-primary px-8 py-4 rounded-full mt-4 active:opacity-80"
             >
               <Text className="text-background font-semibold text-center">
-                Get Started →
+                {t('get_started')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -169,13 +171,13 @@ export default function OnboardingScreen() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex-1">
           <View className="flex-1 justify-center px-6 gap-6">
             <View className="gap-2">
-              <Text className="text-2xl font-bold text-foreground">
-                What's your business called?
-              </Text>
+            <Text className="text-2xl font-bold text-foreground">
+              {t('business_name_title')}
+            </Text>
             </View>
 
             <TextInput
-              placeholder="Enter business name"
+              placeholder={t('business_name_placeholder')}
               placeholderTextColor={colors.muted}
               value={businessName}
               onChangeText={setBusinessName}
@@ -186,7 +188,7 @@ export default function OnboardingScreen() {
             />
 
             <Text className="text-sm text-muted">
-              This will appear on your bills and reports
+              {t('business_name_hint')}
             </Text>
 
             <View className="flex-row gap-3 mt-6">
@@ -216,12 +218,12 @@ export default function OnboardingScreen() {
         <View className="flex-1 px-6 gap-4">
           <View className="gap-2">
             <Text className="text-2xl font-bold text-foreground">
-              Select your Country
+              {t('select_country')}
             </Text>
           </View>
 
           <TextInput
-            placeholder="Search countries..."
+            placeholder={t('search_countries')}
             placeholderTextColor={colors.muted}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -266,7 +268,7 @@ export default function OnboardingScreen() {
               className="flex-1 border border-border px-6 py-3 rounded-full active:opacity-80"
             >
               <Text className="text-foreground font-semibold text-center">
-                ← Back
+                {t('back')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -274,7 +276,7 @@ export default function OnboardingScreen() {
               className="flex-1 bg-primary px-6 py-3 rounded-full active:opacity-80"
             >
               <Text className="text-background font-semibold text-center">
-                Next →
+                {t('next')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -287,7 +289,7 @@ export default function OnboardingScreen() {
           <View className="flex-1 px-6 gap-4">
             <View className="gap-2">
               <Text className="text-2xl font-bold text-foreground">
-                Choose your Language
+                {t('choose_language')}
               </Text>
             </View>
 
@@ -335,7 +337,7 @@ export default function OnboardingScreen() {
                 className="flex-1 border border-border px-6 py-3 rounded-full active:opacity-80"
               >
                 <Text className="text-foreground font-semibold text-center">
-                  ← Back
+                  {t('back')}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -343,7 +345,7 @@ export default function OnboardingScreen() {
                 className="flex-1 bg-primary px-6 py-3 rounded-full active:opacity-80"
               >
                 <Text className="text-background font-semibold text-center">
-                  Let's Go! 🚀
+                  {t('lets_go')}
                 </Text>
               </TouchableOpacity>
             </View>

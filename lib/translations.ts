@@ -1,0 +1,338 @@
+// Language translations for Business Manager Pro
+export const translations: Record<string, Record<string, string>> = {
+  English: {
+    // Onboarding
+    'welcome_title': 'Welcome to Business Manager Pro',
+    'welcome_subtitle': 'Complete business management — inventory, sales, reports & more',
+    'get_started': 'Get Started →',
+    'business_name_title': "What's your business called?",
+    'business_name_placeholder': 'Enter business name',
+    'business_name_hint': 'This will appear on your bills and reports',
+    'select_country': 'Select your Country',
+    'search_countries': 'Search countries...',
+    'choose_language': 'Choose your Language',
+    'lets_go': "Let's Go! 🚀",
+    'back': '← Back',
+    'next': 'Next →',
+    'step_of': 'Step',
+    'of': 'of',
+    'error': 'Error',
+    'business_name_required': 'Please enter your business name',
+    'country_required': 'Please select your country',
+    
+    // Dashboard
+    'dashboard': 'Dashboard',
+    'today_sales': "Today's Sales",
+    'total_inventory': 'Total Inventory',
+    'low_stock_items': 'Low Stock Items',
+    'quick_actions': 'Quick Actions',
+    'add_product': 'Add Product',
+    'new_sale': 'New Sale',
+    'view_reports': 'View Reports',
+    
+    // Inventory
+    'inventory': 'Inventory',
+    'add_new_product': 'Add New Product',
+    'product_name': 'Product Name',
+    'product_price': 'Price',
+    'product_quantity': 'Quantity',
+    'product_category': 'Category',
+    'edit_product': 'Edit Product',
+    'delete_product': 'Delete Product',
+    'scan_barcode': 'Scan Barcode',
+    
+    // Sales
+    'sales': 'Sales',
+    'new_transaction': 'New Transaction',
+    'cart': 'Cart',
+    'total_amount': 'Total Amount',
+    'discount': 'Discount',
+    'tax': 'Tax',
+    'payment_method': 'Payment Method',
+    'cash': 'Cash',
+    'card': 'Card',
+    'upi': 'UPI',
+    'complete_sale': 'Complete Sale',
+    'sale_completed': 'Sale Completed',
+    
+    // Reports
+    'reports': 'Reports',
+    'revenue': 'Revenue',
+    'expenses': 'Expenses',
+    'profit': 'Profit',
+    'date_range': 'Date Range',
+    'last_30_days': 'Last 30 Days',
+    'this_month': 'This Month',
+    'this_year': 'This Year',
+    'export': 'Export',
+    
+    // Settings
+    'settings': 'Settings',
+    'business_profile': 'Business Profile',
+    'currency': 'Currency',
+    'language': 'Language',
+    'tax_percentage': 'Tax Percentage',
+    'low_stock_threshold': 'Low Stock Threshold',
+    'notifications': 'Notifications',
+    'data_backup': 'Data Backup',
+    'export_data': 'Export Data',
+    'import_data': 'Import Data',
+    'save': 'Save',
+    'cancel': 'Cancel',
+  },
+  
+  Hindi: {
+    // Onboarding
+    'welcome_title': 'Business Manager Pro में आपका स्वागत है',
+    'welcome_subtitle': 'संपूर्ण व्यवसाय प्रबंधन — इन्वेंटरी, बिक्री, रिपोर्ट और बहुत कुछ',
+    'get_started': 'शुरू करें →',
+    'business_name_title': 'आपके व्यवसाय का नाम क्या है?',
+    'business_name_placeholder': 'व्यवसाय का नाम दर्ज करें',
+    'business_name_hint': 'यह आपके बिलों और रिपोर्ट पर दिखाई देगा',
+    'select_country': 'अपना देश चुनें',
+    'search_countries': 'देशों को खोजें...',
+    'choose_language': 'अपनी भाषा चुनें',
+    'lets_go': 'चलिए शुरू करते हैं! 🚀',
+    'back': '← वापस',
+    'next': 'अगला →',
+    'step_of': 'चरण',
+    'of': 'का',
+    'error': 'त्रुटि',
+    'business_name_required': 'कृपया अपने व्यवसाय का नाम दर्ज करें',
+    'country_required': 'कृपया अपना देश चुनें',
+    
+    // Dashboard
+    'dashboard': 'डैशबोर्ड',
+    'today_sales': 'आज की बिक्री',
+    'total_inventory': 'कुल इन्वेंटरी',
+    'low_stock_items': 'कम स्टॉक आइटम',
+    'quick_actions': 'त्वरित कार्य',
+    'add_product': 'उत्पाद जोड़ें',
+    'new_sale': 'नई बिक्री',
+    'view_reports': 'रिपोर्ट देखें',
+    
+    // Inventory
+    'inventory': 'इन्वेंटरी',
+    'add_new_product': 'नया उत्पाद जोड़ें',
+    'product_name': 'उत्पाद का नाम',
+    'product_price': 'कीमत',
+    'product_quantity': 'मात्रा',
+    'product_category': 'श्रेणी',
+    'edit_product': 'उत्पाद संपादित करें',
+    'delete_product': 'उत्पाद हटाएं',
+    'scan_barcode': 'बारकोड स्कैन करें',
+    
+    // Sales
+    'sales': 'बिक्री',
+    'new_transaction': 'नया लेनदेन',
+    'cart': 'कार्ट',
+    'total_amount': 'कुल राशि',
+    'discount': 'छूट',
+    'tax': 'कर',
+    'payment_method': 'भुगतान विधि',
+    'cash': 'नकद',
+    'card': 'कार्ड',
+    'upi': 'यूपीआई',
+    'complete_sale': 'बिक्री पूरी करें',
+    'sale_completed': 'बिक्री पूरी हुई',
+    
+    // Reports
+    'reports': 'रिपोर्ट',
+    'revenue': 'राजस्व',
+    'expenses': 'खर्च',
+    'profit': 'लाभ',
+    'date_range': 'तारीख की सीमा',
+    'last_30_days': 'पिछले 30 दिन',
+    'this_month': 'इस महीने',
+    'this_year': 'इस साल',
+    'export': 'निर्यात',
+    
+    // Settings
+    'settings': 'सेटिंग्स',
+    'business_profile': 'व्यवसाय प्रोफाइल',
+    'currency': 'मुद्रा',
+    'language': 'भाषा',
+    'tax_percentage': 'कर प्रतिशत',
+    'low_stock_threshold': 'कम स्टॉक सीमा',
+    'notifications': 'सूचनाएं',
+    'data_backup': 'डेटा बैकअप',
+    'export_data': 'डेटा निर्यात करें',
+    'import_data': 'डेटा आयात करें',
+    'save': 'सहेजें',
+    'cancel': 'रद्द करें',
+  },
+
+  Tamil: {
+    // Onboarding
+    'welcome_title': 'Business Manager Pro-க்கு வரவேற்கிறோம்',
+    'welcome_subtitle': 'முழு வணிக நிர்வாகம் — பொருட்கள், விற்பனை, அறிக்கைகள் மற்றும் பலவும்',
+    'get_started': 'தொடங்கவும் →',
+    'business_name_title': 'உங்கள் வணிகத்தின் பெயர் என்ன?',
+    'business_name_placeholder': 'வணிக பெயரை உள்ளிடவும்',
+    'business_name_hint': 'இது உங்கள் பில்கள் மற்றும் அறிக்கைகளில் தோன்றும்',
+    'select_country': 'உங்கள் நாட்டைத் தேர்ந்தெடுக்கவும்',
+    'search_countries': 'நாடுகளைத் தேடவும்...',
+    'choose_language': 'உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்',
+    'lets_go': 'தொடங்குவோம்! 🚀',
+    'back': '← பின்னால்',
+    'next': 'அடுத்து →',
+    'step_of': 'படி',
+    'of': 'இன்',
+    'error': 'பிழை',
+    'business_name_required': 'தயவுசெய்து உங்கள் வணிக பெயரை உள்ளிடவும்',
+    'country_required': 'தயவுசெய்து உங்கள் நாட்டைத் தேர்ந்தெடுக்கவும்',
+    
+    // Dashboard
+    'dashboard': 'டாஷ்போர்டு',
+    'today_sales': 'இன்றைய விற்பனை',
+    'total_inventory': 'மொத்த பொருட்கள்',
+    'low_stock_items': 'குறைந்த பொருட்கள்',
+    'quick_actions': 'விரைந்த செயல்கள்',
+    'add_product': 'பொருளைச் சேர்க்கவும்',
+    'new_sale': 'புதிய விற்பனை',
+    'view_reports': 'அறிக்கைகளைப் பார்க்கவும்',
+    
+    // Inventory
+    'inventory': 'பொருட்கள்',
+    'add_new_product': 'புதிய பொருளைச் சேர்க்கவும்',
+    'product_name': 'பொருளின் பெயர்',
+    'product_price': 'விலை',
+    'product_quantity': 'அளவு',
+    'product_category': 'வகை',
+    'edit_product': 'பொருளைத் திருத்தவும்',
+    'delete_product': 'பொருளை நீக்கவும்',
+    'scan_barcode': 'பார்கோடை ஸ்கேன் செய்யவும்',
+    
+    // Sales
+    'sales': 'விற்பனை',
+    'new_transaction': 'புதிய பரிவர்த்தனை',
+    'cart': 'கூடை',
+    'total_amount': 'மொத்த தொகை',
+    'discount': 'ছাড்',
+    'tax': 'வரி',
+    'payment_method': 'பணம் செலுத்தும் முறை',
+    'cash': 'பணம்',
+    'card': 'கார்டு',
+    'upi': 'யூபிআই',
+    'complete_sale': 'விற்பனையை முடிக்கவும்',
+    'sale_completed': 'விற்பனை முடிந்தது',
+    
+    // Reports
+    'reports': 'அறிக்கைகள்',
+    'revenue': 'வருவாய்',
+    'expenses': 'செலவுகள்',
+    'profit': 'லாभ',
+    'date_range': 'தேதி வரம்பு',
+    'last_30_days': 'கடந்த 30 நாட்கள்',
+    'this_month': 'இந்த மாதம்',
+    'this_year': 'இந்த வருடம்',
+    'export': 'ஏற்றுமதி',
+    
+    // Settings
+    'settings': 'அமைப்புகள்',
+    'business_profile': 'வணிக சுயவிவரம்',
+    'currency': 'நாணயம்',
+    'language': 'மொழி',
+    'tax_percentage': 'வரி சதவீதம்',
+    'low_stock_threshold': 'குறைந்த பொருட்கள் வரம்பு',
+    'notifications': 'அறிவிப்புகள்',
+    'data_backup': 'தரவு காப்புப்பு',
+    'export_data': 'தரவை ஏற்றுமதி செய்யவும்',
+    'import_data': 'தரவை இறக்குமதி செய்யவும்',
+    'save': 'சேமிக்கவும்',
+    'cancel': 'ரத்து செய்யவும்',
+  },
+
+  Urdu: {
+    // Onboarding
+    'welcome_title': 'Business Manager Pro میں خوش آمدید',
+    'welcome_subtitle': 'مکمل کاروباری انتظام — انوینٹری، فروخت، رپورٹس اور بہت کچھ',
+    'get_started': 'شروع کریں →',
+    'business_name_title': 'آپ کے کاروبار کا نام کیا ہے؟',
+    'business_name_placeholder': 'کاروباری نام درج کریں',
+    'business_name_hint': 'یہ آپ کے بلوں اور رپورٹس پر ظاہر ہوگا',
+    'select_country': 'اپنا ملک منتخب کریں',
+    'search_countries': 'ممالک تلاش کریں...',
+    'choose_language': 'اپنی زبان منتخب کریں',
+    'lets_go': 'چلیں شروع کریں! 🚀',
+    'back': '← واپس',
+    'next': 'اگلا →',
+    'step_of': 'مرحلہ',
+    'of': 'کا',
+    'error': 'خرابی',
+    'business_name_required': 'براہ کرم اپنے کاروبار کا نام درج کریں',
+    'country_required': 'براہ کرم اپنا ملک منتخب کریں',
+    
+    // Dashboard
+    'dashboard': 'ڈیش بورڈ',
+    'today_sales': 'آج کی فروخت',
+    'total_inventory': 'کل انوینٹری',
+    'low_stock_items': 'کم سٹاک اشیاء',
+    'quick_actions': 'فوری اقدامات',
+    'add_product': 'مصنوع شامل کریں',
+    'new_sale': 'نئی فروخت',
+    'view_reports': 'رپورٹس دیکھیں',
+    
+    // Inventory
+    'inventory': 'انوینٹری',
+    'add_new_product': 'نئی مصنوع شامل کریں',
+    'product_name': 'مصنوع کا نام',
+    'product_price': 'قیمت',
+    'product_quantity': 'مقدار',
+    'product_category': 'زمرہ',
+    'edit_product': 'مصنوع میں ترمیم کریں',
+    'delete_product': 'مصنوع حذف کریں',
+    'scan_barcode': 'بار کوڈ اسکین کریں',
+    
+    // Sales
+    'sales': 'فروخت',
+    'new_transaction': 'نیا لین دین',
+    'cart': 'ڈبہ',
+    'total_amount': 'کل رقم',
+    'discount': 'رعایت',
+    'tax': 'ٹیکس',
+    'payment_method': 'ادائیگی کا طریقہ',
+    'cash': 'نقد',
+    'card': 'کارڈ',
+    'upi': 'یو پی آئی',
+    'complete_sale': 'فروخت مکمل کریں',
+    'sale_completed': 'فروخت مکمل ہوگئی',
+    
+    // Reports
+    'reports': 'رپورٹس',
+    'revenue': 'آمدنی',
+    'expenses': 'اخراجات',
+    'profit': 'منافع',
+    'date_range': 'تاریخ کی حد',
+    'last_30_days': 'پچھلے 30 دن',
+    'this_month': 'اس ماہ',
+    'this_year': 'اس سال',
+    'export': 'برآمد',
+    
+    // Settings
+    'settings': 'ترتیبات',
+    'business_profile': 'کاروباری پروفائل',
+    'currency': 'کرنسی',
+    'language': 'زبان',
+    'tax_percentage': 'ٹیکس فیصد',
+    'low_stock_threshold': 'کم سٹاک کی حد',
+    'notifications': 'اطلاعات',
+    'data_backup': 'ڈیٹا بیک اپ',
+    'export_data': 'ڈیٹا برآمد کریں',
+    'import_data': 'ڈیٹا درآمد کریں',
+    'save': 'محفوظ کریں',
+    'cancel': 'منسوخ کریں',
+  },
+};
+
+// Hook to get translated text
+export const useTranslation = (language: string) => {
+  return (key: string, defaultValue: string = key): string => {
+    return translations[language]?.[key] || translations['English']?.[key] || defaultValue;
+  };
+};
+
+// Get all available languages
+export const getAvailableLanguages = (): string[] => {
+  return Object.keys(translations);
+};

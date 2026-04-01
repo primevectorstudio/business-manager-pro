@@ -43,23 +43,41 @@ export default function RootLayout() {
     initManusRuntime();
   }, []);
 
-  // Check onboarding status on app startup
+  // Check onboarding status on app startup - runs only once
   useEffect(() => {
+    let isMounted = true;
+    
     const checkOnboarding = async () => {
       try {
         const onboardingComplete = await AsyncStorage.getItem('onboarding_complete');
-        if (onboardingComplete !== 'true') {
-          router.replace('/onboarding');
+        
+        if (isMounted) {
+          // Only redirect if onboarding is NOT complete
+          if (onboardingComplete !== 'true') {
+            // Use replace to prevent back navigation
+            router.replace('/onboarding');
+          } else {
+            // Onboarding already complete, go to main app
+            router.replace('/(tabs)');
+          }
+          setIsLoading(false);
         }
       } catch (error) {
         console.error('Error checking onboarding status:', error);
-      } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+          // Default to main app on error
+          router.replace('/(tabs)');
+        }
       }
     };
 
     checkOnboarding();
-  }, [router]);
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSafeAreaUpdate = useCallback((metrics: Metrics) => {
     setInsets(metrics.insets);
@@ -107,7 +125,7 @@ export default function RootLayout() {
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
           <QueryClientProvider client={queryClient}>
             <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="onboarding" />
+              <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="oauth/callback" />
               <Stack.Screen name="product-form" />
