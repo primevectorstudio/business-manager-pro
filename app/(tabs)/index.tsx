@@ -5,19 +5,23 @@ import { ScreenContainer } from '@/components/screen-container';
 import { getLowStockProducts, getAllSales, getDailySalesTotal, Product } from '@/lib/database';
 import { useAppStore } from '@/lib/store';
 import { useColors } from '@/hooks/use-colors';
+import { useLanguage } from '@/lib/language-context';
+import { useTranslation } from '@/lib/translations';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function DashboardScreen() {
   const router = useRouter();
   const colors = useColors();
   const { settings } = useAppStore();
+  const { language } = useLanguage();
+  const t = useTranslation(language);
   const [loading, setLoading] = useState(true);
   const [lowStockProducts, setLowStockProducts] = useState<Product[]>([]);
   const [todaysSales, setTodaysSales] = useState(0);
   const [totalTransactions, setTotalTransactions] = useState(0);
 
   useFocusEffect(
-    useCallback(() => {
+    React.useCallback(() => {
       loadDashboardData();
     }, [])
   );
@@ -74,30 +78,30 @@ export default function DashboardScreen() {
         {/* Key Metrics */}
         <View className="flex-row gap-3 mb-6">
           <View className="flex-1 bg-primary/10 border border-primary rounded-lg p-4">
-            <Text className="text-xs text-muted mb-2">Today's Sales</Text>
+            <Text className="text-xs text-muted mb-2">{t('today_sales')}</Text>
             <Text className="text-2xl font-bold text-primary">
-              {settings.currency}{todaysSales.toFixed(2)}
+              {settings.currencySymbol}{todaysSales.toFixed(2)}
             </Text>
-            <Text className="text-xs text-muted mt-1">{totalTransactions} transaction(s)</Text>
+            <Text className="text-xs text-muted mt-1">{totalTransactions} {t('of')}</Text>
           </View>
 
           <View className="flex-1 bg-success/10 border border-success rounded-lg p-4">
-            <Text className="text-xs text-muted mb-2">Low Stock</Text>
+            <Text className="text-xs text-muted mb-2">{t('low_stock_items')}</Text>
             <Text className="text-2xl font-bold text-success">{lowStockProducts.length}</Text>
-            <Text className="text-xs text-muted mt-1">Items to restock</Text>
+            <Text className="text-xs text-muted mt-1">{t('low_stock_items')}</Text>
           </View>
         </View>
 
         {/* Quick Actions */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-foreground mb-3">Quick Actions</Text>
+          <Text className="text-lg font-bold text-foreground mb-3">{t('quick_actions')}</Text>
           <View className="flex-row gap-3">
             <TouchableOpacity
               onPress={() => router.push('/(tabs)/sales')}
               className="flex-1 bg-primary rounded-lg py-4 flex-row items-center justify-center"
             >
               <MaterialIcons name="add-shopping-cart" size={20} color="#fff" />
-              <Text className="text-white font-semibold ml-2">New Sale</Text>
+              <Text className="text-white font-semibold ml-2">{t('new_sale')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -105,7 +109,7 @@ export default function DashboardScreen() {
               className="flex-1 bg-surface border border-border rounded-lg py-4 flex-row items-center justify-center"
             >
               <MaterialIcons name="add" size={20} color="#0a7ea4" />
-              <Text className="text-primary font-semibold ml-2">Add Item</Text>
+              <Text className="text-primary font-semibold ml-2">{t('add_product')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -114,7 +118,7 @@ export default function DashboardScreen() {
         {lowStockProducts.length > 0 && (
           <View className="mb-6">
             <View className="flex-row items-center justify-between mb-3">
-              <Text className="text-lg font-bold text-foreground">Low Stock Alerts</Text>
+              <Text className="text-lg font-bold text-foreground">{t('low_stock_items')}</Text>
               <TouchableOpacity onPress={() => router.push('/(tabs)/inventory')}>
                 <Text className="text-primary text-sm font-semibold">View All</Text>
               </TouchableOpacity>

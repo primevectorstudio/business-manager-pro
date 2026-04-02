@@ -12,17 +12,22 @@ import {
 import { useRouter, useFocusEffect } from 'expo-router';
 import { ScreenContainer } from '@/components/screen-container';
 import { useAppStore } from '@/lib/store';
+import { useLanguage } from '@/lib/language-context';
+import { useTranslation, getAvailableLanguages } from '@/lib/translations';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
 export default function SettingsScreen() {
   const router = useRouter();
   const { settings, updateSettings } = useAppStore();
+  const { language, setLanguage } = useLanguage();
+  const t = useTranslation(language);
   const [loading, setLoading] = useState(false);
+  const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 
   // Form state
   const [businessName, setBusinessName] = useState(settings.businessName || '');
-  const [currency, setCurrency] = useState(settings.currency || '$');
+  const [selectedLanguage, setSelectedLanguage] = useState(language);
   const [taxPercentage, setTaxPercentage] = useState(settings.taxPercentage?.toString() || '0');
   const [lowStockThreshold, setLowStockThreshold] = useState(settings.lowStockThreshold?.toString() || '5');
   const [notificationsEnabled, setNotificationsEnabled] = useState(settings.notificationsEnabled !== false);
@@ -53,11 +58,16 @@ export default function SettingsScreen() {
       // Update settings
       await updateSettings({
         businessName: businessName.trim(),
-        currency: currency.trim() || '$',
+        language: selectedLanguage,
         taxPercentage: tax,
         lowStockThreshold: threshold,
         notificationsEnabled,
       });
+      
+      // Update language if changed
+      if (selectedLanguage !== language) {
+        await setLanguage(selectedLanguage);
+      }
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       Alert.alert('Success', 'Settings saved successfully');
@@ -77,7 +87,7 @@ export default function SettingsScreen() {
           <TouchableOpacity onPress={() => router.back()} className="mr-3">
             <MaterialIcons name="arrow-back" size={28} color="#0a7ea4" />
           </TouchableOpacity>
-          <Text className="text-3xl font-bold text-foreground">Settings</Text>
+          <Text className="text-3xl font-bold text-foreground">{t('settings')}</Text>
         </View>
 
         {/* Business Information Section */}
@@ -87,37 +97,44 @@ export default function SettingsScreen() {
           <View className="mb-4">
             <Text className="text-sm font-semibold text-foreground mb-2">Business Name</Text>
             <TextInput
-              placeholder="Enter your business name"
-              placeholderTextColor="#9BA1A6"
               value={businessName}
               onChangeText={setBusinessName}
+              placeholder="Enter business name"
               className="bg-surface border border-border rounded-lg px-4 py-3 text-foreground"
+              placeholderTextColor="#999"
             />
-            <Text className="text-xs text-muted mt-1">This name appears in receipts and reports</Text>
           </View>
 
           <View className="mb-4">
-            <Text className="text-sm font-semibold text-foreground mb-2">Currency Symbol</Text>
-            <View className="flex-row gap-2">
-              {['$', '€', '£', '₹', '¥', '₽'].map((sym) => (
-                <TouchableOpacity
-                  key={sym}
-                  onPress={() => setCurrency(sym)}
-                  className={`flex-1 py-3 px-2 rounded-lg border ${
-                    currency === sym ? 'bg-primary border-primary' : 'bg-surface border-border'
-                  }`}
-                >
-                  <Text
-                    className={`text-center font-bold text-lg ${
-                      currency === sym ? 'text-white' : 'text-foreground'
+            <Text className="text-sm font-semibold text-foreground mb-2">{t('language')}</Text>
+            <TouchableOpacity
+              onPress={() => setShowLanguageSelector(!showLanguageSelector)}
+              className="bg-surface border border-border rounded-lg px-4 py-3 flex-row items-center justify-between"
+            >
+              <Text className="text-foreground font-semibold">{selectedLanguage}</Text>
+              <MaterialIcons name={showLanguageSelector ? 'expand-less' : 'expand-more'} size={24} color="#0a7ea4" />
+            </TouchableOpacity>
+            
+            {showLanguageSelector && (
+              <View className="mt-2 bg-surface border border-border rounded-lg p-2">
+                {getAvailableLanguages().map((lang) => (
+                  <TouchableOpacity
+                    key={lang}
+                    onPress={() => {
+                      setSelectedLanguage(lang);
+                      setShowLanguageSelector(false);
+                    }}
+                    className={`py-3 px-4 rounded-lg ${
+                      selectedLanguage === lang ? 'bg-primary' : 'bg-surface'
                     }`}
                   >
-                    {sym}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <Text className="text-xs text-muted mt-2">Selected: {currency}</Text>
+                    <Text className={selectedLanguage === lang ? 'text-white font-semibold' : 'text-foreground'}>
+                      {lang}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
         </View>
 
@@ -126,7 +143,7 @@ export default function SettingsScreen() {
           <Text className="text-lg font-bold text-foreground mb-4">Financial Settings</Text>
 
           <View className="mb-4">
-            <Text className="text-sm font-semibold text-foreground mb-2">Tax Percentage (%)</Text>
+            <Text className="text-sm font-semibold text-foreground mb-2">{t('tax_percentage')}</Text>
             <View className="flex-row items-center gap-2">
               <TextInput
                 placeholder="0"
