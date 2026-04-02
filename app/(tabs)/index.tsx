@@ -78,30 +78,30 @@ export default function DashboardScreen() {
         {/* Key Metrics */}
         <View className="flex-row gap-3 mb-6">
           <View className="flex-1 bg-primary/10 border border-primary rounded-lg p-4">
-            <Text className="text-xs text-muted mb-2">{t('today_sales')}</Text>
+            <Text className="text-xs text-muted mb-2">{t.todaysSales}</Text>
             <Text className="text-2xl font-bold text-primary">
               {settings.currencySymbol}{todaysSales.toFixed(2)}
             </Text>
-            <Text className="text-xs text-muted mt-1">{totalTransactions} {t('of')}</Text>
+            <Text className="text-xs text-muted mt-1">{totalTransactions} {t.of}</Text>
           </View>
 
           <View className="flex-1 bg-success/10 border border-success rounded-lg p-4">
-            <Text className="text-xs text-muted mb-2">{t('low_stock_items')}</Text>
+            <Text className="text-xs text-muted mb-2">{t.lowStockItems}</Text>
             <Text className="text-2xl font-bold text-success">{lowStockProducts.length}</Text>
-            <Text className="text-xs text-muted mt-1">{t('low_stock_items')}</Text>
+            <Text className="text-xs text-muted mt-1">{t.lowStockItems}</Text>
           </View>
         </View>
 
         {/* Quick Actions */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-foreground mb-3">{t('quick_actions')}</Text>
+          <Text className="text-lg font-bold text-foreground mb-3">{t.quickActions}</Text>
           <View className="flex-row gap-3">
             <TouchableOpacity
               onPress={() => router.push('/(tabs)/sales')}
               className="flex-1 bg-primary rounded-lg py-4 flex-row items-center justify-center"
             >
               <MaterialIcons name="add-shopping-cart" size={20} color="#fff" />
-              <Text className="text-white font-semibold ml-2">{t('new_sale')}</Text>
+              <Text className="text-white font-semibold ml-2">{t.newSale}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -109,7 +109,7 @@ export default function DashboardScreen() {
               className="flex-1 bg-surface border border-border rounded-lg py-4 flex-row items-center justify-center"
             >
               <MaterialIcons name="add" size={20} color="#0a7ea4" />
-              <Text className="text-primary font-semibold ml-2">{t('add_product')}</Text>
+              <Text className="text-primary font-semibold ml-2">{t.addProduct}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -118,7 +118,7 @@ export default function DashboardScreen() {
         {lowStockProducts.length > 0 && (
           <View className="mb-6">
             <View className="flex-row items-center justify-between mb-3">
-              <Text className="text-lg font-bold text-foreground">{t('low_stock_items')}</Text>
+              <Text className="text-lg font-bold text-foreground">{t.lowStockItems}</Text>
               <TouchableOpacity onPress={() => router.push('/(tabs)/inventory')}>
                 <Text className="text-primary text-sm font-semibold">View All</Text>
               </TouchableOpacity>

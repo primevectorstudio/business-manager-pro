@@ -87,7 +87,7 @@ export default function SettingsScreen() {
           <TouchableOpacity onPress={() => router.back()} className="mr-3">
             <MaterialIcons name="arrow-back" size={28} color="#0a7ea4" />
           </TouchableOpacity>
-          <Text className="text-3xl font-bold text-foreground">{t('settings')}</Text>
+          <Text className="text-3xl font-bold text-foreground">{t.settings}</Text>
         </View>
 
         {/* Business Information Section */}
@@ -106,7 +106,7 @@ export default function SettingsScreen() {
           </View>
 
           <View className="mb-4">
-            <Text className="text-sm font-semibold text-foreground mb-2">{t('language')}</Text>
+            <Text className="text-sm font-semibold text-foreground mb-2">{t.language}</Text>
             <TouchableOpacity
               onPress={() => setShowLanguageSelector(!showLanguageSelector)}
               className="bg-surface border border-border rounded-lg px-4 py-3 flex-row items-center justify-between"
@@ -143,7 +143,7 @@ export default function SettingsScreen() {
           <Text className="text-lg font-bold text-foreground mb-4">Financial Settings</Text>
 
           <View className="mb-4">
-            <Text className="text-sm font-semibold text-foreground mb-2">{t('tax_percentage')}</Text>
+            <Text className="text-sm font-semibold text-foreground mb-2">{t.taxRate}</Text>
             <View className="flex-row items-center gap-2">
               <TextInput
                 placeholder="0"

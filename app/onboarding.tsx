@@ -37,6 +37,25 @@ const COUNTRIES = [
   { name: 'Nigeria', flag: '🇳🇬' },
 ];
 
+const COUNTRY_CURRENCY_MAP: Record<string, string> = {
+  'India': '₹',
+  'Pakistan': 'Rs',
+  'Bangladesh': '৳',
+  'UAE': 'د.إ',
+  'Saudi Arabia': '﷼',
+  'USA': '$',
+  'UK': '£',
+  'Canada': 'CA$',
+  'Australia': 'A$',
+  'Nepal': 'Rs',
+  'Sri Lanka': 'Rs',
+  'Malaysia': 'RM',
+  'Singapore': 'S$',
+  'South Africa': 'R',
+  'Kenya': 'KSh',
+  'Nigeria': '₦',
+};
+
 const COUNTRY_LANGUAGES: Record<string, string[]> = {
   'India': ['Hindi', 'English', 'Tamil', 'Telugu', 'Marathi', 'Bengali', 'Gujarati', 'Kannada'],
   'Pakistan': ['Urdu', 'English'],
@@ -84,12 +103,12 @@ export default function OnboardingScreen() {
   const handleNext = () => {
     if (currentStep === 2) {
       if (!businessName.trim()) {
-        Alert.alert(t('error'), t('business_name_required'));
+        Alert.alert(t.error, t.business_name_required);
         return;
       }
     } else if (currentStep === 3) {
       if (!selectedCountry) {
-        Alert.alert(t('error'), t('country_required'));
+        Alert.alert(t.error, t.country_required);
         return;
       }
     }
@@ -109,8 +128,14 @@ export default function OnboardingScreen() {
       await AsyncStorage.setItem('user_country', selectedCountry || 'India');
       await AsyncStorage.setItem('user_language', selectedLanguage || 'English');
 
-      // Save business name to app store
-      updateSettings({ businessName: businessName.trim() });
+      // Get currency for selected country
+      const currency = COUNTRY_CURRENCY_MAP[selectedCountry || 'India'] || '$';
+      
+      // Save business name and currency to app store
+      updateSettings({ 
+        businessName: businessName.trim(),
+        currency: currency
+      });
 
       // Navigate to main app
       router.replace('/(tabs)');
@@ -134,7 +159,7 @@ export default function OnboardingScreen() {
 
       {/* Step indicator */}
       <Text className="text-center text-sm text-muted mb-6">
-        {t('step_of')} {currentStep} {t('of')} 4
+        {t.step_of} {currentStep} {t.of} 4
       </Text>
 
       {/* Screen 1: Welcome */}
@@ -148,10 +173,10 @@ export default function OnboardingScreen() {
             />
             <View className="gap-3">
               <Text className="text-3xl font-bold text-foreground text-center">
-                {t('welcome_title')}
+                {t.welcome_title}
               </Text>
               <Text className="text-base text-muted text-center leading-relaxed">
-                {t('welcome_subtitle')}
+                {t.welcome_subtitle}
               </Text>
             </View>
             <TouchableOpacity
@@ -159,7 +184,7 @@ export default function OnboardingScreen() {
               className="bg-primary px-8 py-4 rounded-full mt-4 active:opacity-80"
             >
               <Text className="text-background font-semibold text-center">
-                {t('get_started')}
+                {t.get_started}
               </Text>
             </TouchableOpacity>
           </View>
@@ -172,12 +197,12 @@ export default function OnboardingScreen() {
           <View className="flex-1 justify-center px-6 gap-6">
             <View className="gap-2">
             <Text className="text-2xl font-bold text-foreground">
-              {t('business_name_title')}
+              {t.business_name_title}
             </Text>
             </View>
 
             <TextInput
-              placeholder={t('business_name_placeholder')}
+              placeholder={t.business_name_placeholder}
               placeholderTextColor={colors.muted}
               value={businessName}
               onChangeText={setBusinessName}
@@ -188,7 +213,7 @@ export default function OnboardingScreen() {
             />
 
             <Text className="text-sm text-muted">
-              {t('business_name_hint')}
+              {t.business_name_hint}
             </Text>
 
             <View className="flex-row gap-3 mt-6">
@@ -218,12 +243,12 @@ export default function OnboardingScreen() {
         <View className="flex-1 px-6 gap-4">
           <View className="gap-2">
             <Text className="text-2xl font-bold text-foreground">
-              {t('select_country')}
+              {t.select_country}
             </Text>
           </View>
 
           <TextInput
-            placeholder={t('search_countries')}
+            placeholder={t.search_countries}
             placeholderTextColor={colors.muted}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -268,7 +293,7 @@ export default function OnboardingScreen() {
               className="flex-1 border border-border px-6 py-3 rounded-full active:opacity-80"
             >
               <Text className="text-foreground font-semibold text-center">
-                {t('back')}
+                {t.back}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -276,7 +301,7 @@ export default function OnboardingScreen() {
               className="flex-1 bg-primary px-6 py-3 rounded-full active:opacity-80"
             >
               <Text className="text-background font-semibold text-center">
-                {t('next')}
+                {t.next}
               </Text>
             </TouchableOpacity>
           </View>
@@ -289,7 +314,7 @@ export default function OnboardingScreen() {
           <View className="flex-1 px-6 gap-4">
             <View className="gap-2">
               <Text className="text-2xl font-bold text-foreground">
-                {t('choose_language')}
+                {t.choose_language}
               </Text>
             </View>
 
@@ -337,7 +362,7 @@ export default function OnboardingScreen() {
                 className="flex-1 border border-border px-6 py-3 rounded-full active:opacity-80"
               >
                 <Text className="text-foreground font-semibold text-center">
-                  {t('back')}
+                  {t.back}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -345,7 +370,7 @@ export default function OnboardingScreen() {
                 className="flex-1 bg-primary px-6 py-3 rounded-full active:opacity-80"
               >
                 <Text className="text-background font-semibold text-center">
-                  {t('lets_go')}
+                  {t.lets_go}
                 </Text>
               </TouchableOpacity>
             </View>
