@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { ScreenContainer } from '@/components/screen-container';
 import { useAppStore } from '@/lib/store';
 import { useLanguage } from '@/lib/language-context';
-import { useTranslation, getAvailableLanguages } from '@/lib/translations';
+import { useTranslation, getAvailableLanguages, type Language } from '@/lib/translations';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 

@@ -16,7 +16,7 @@ import { ScreenContainer } from '@/components/screen-container';
 import { useColors } from '@/hooks/use-colors';
 import { useAppStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
-import { useTranslation } from '@/lib/translations';
+import { useTranslation, type Language } from '@/lib/translations';
 
 const COUNTRIES = [
   { name: 'India', flag: '🇮🇳' },
@@ -80,10 +80,10 @@ export default function OnboardingScreen() {
   const [currentStep, setCurrentStep] = useState(1);
   const [businessName, setBusinessName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>('English');
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>('en');
   const [searchQuery, setSearchQuery] = useState('');
   const { updateSettings } = useAppStore();
-  const t = useTranslation(selectedLanguage || 'English');
+  const t = useTranslation((selectedLanguage as Language) || 'en');
 
   const filteredCountries = COUNTRIES.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())

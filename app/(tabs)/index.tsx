@@ -6,7 +6,7 @@ import { getLowStockProducts, getAllSales, getDailySalesTotal, Product } from '@
 import { useAppStore } from '@/lib/store';
 import { useColors } from '@/hooks/use-colors';
 import { useLanguage } from '@/lib/language-context';
-import { useTranslation } from '@/lib/translations';
+import { useTranslation, type Language } from '@/lib/translations';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function DashboardScreen() {
