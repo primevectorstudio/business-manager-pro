@@ -1,4 +1,3 @@
-import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
+import { useState } from 'react';
 import { ScreenContainer } from '@/components/screen-container';
 import { useAppStore } from '@/lib/store';
 import { useLanguage } from '@/lib/language-context';
@@ -105,36 +105,51 @@ export default function SettingsScreen() {
             />
           </View>
 
-          <View className="mb-4">
-            <Text className="text-sm font-semibold text-foreground mb-2">{t.language}</Text>
+          <View className="mb-6">
+            <View className="flex-row items-center gap-2 mb-3">
+              <MaterialIcons name="language" size={24} color="#0a7ea4" />
+              <Text className="text-base font-bold text-foreground">{t.language}</Text>
+            </View>
             <TouchableOpacity
               onPress={() => setShowLanguageSelector(!showLanguageSelector)}
-              className="bg-surface border border-border rounded-lg px-4 py-3 flex-row items-center justify-between"
+              className="bg-primary/10 border-2 border-primary rounded-xl px-4 py-4 flex-row items-center justify-between active:opacity-80"
             >
-              <Text className="text-foreground font-semibold">{selectedLanguage}</Text>
-              <MaterialIcons name={showLanguageSelector ? 'expand-less' : 'expand-more'} size={24} color="#0a7ea4" />
+              <View className="flex-row items-center gap-3 flex-1">
+                <MaterialIcons name="check-circle" size={20} color="#0a7ea4" />
+                <Text className="text-foreground font-bold text-lg">{selectedLanguage}</Text>
+              </View>
+              <MaterialIcons name={showLanguageSelector ? 'expand-less' : 'expand-more'} size={28} color="#0a7ea4" />
             </TouchableOpacity>
             
             {showLanguageSelector && (
-              <View className="mt-2 bg-surface border border-border rounded-lg p-2">
+              <View className="mt-3 bg-surface border-2 border-primary rounded-xl p-3">
                 {getAvailableLanguages().map((lang) => (
                   <TouchableOpacity
                     key={lang}
                     onPress={() => {
                       setSelectedLanguage(lang);
                       setShowLanguageSelector(false);
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
-                    className={`py-3 px-4 rounded-lg ${
-                      selectedLanguage === lang ? 'bg-primary' : 'bg-surface'
+                    className={`py-4 px-4 rounded-lg mb-2 flex-row items-center gap-3 ${
+                      selectedLanguage === lang ? 'bg-primary' : 'bg-surface border border-border'
                     }`}
                   >
-                    <Text className={selectedLanguage === lang ? 'text-white font-semibold' : 'text-foreground'}>
+                    <MaterialIcons 
+                      name={selectedLanguage === lang ? 'radio-button-checked' : 'radio-button-unchecked'} 
+                      size={24} 
+                      color={selectedLanguage === lang ? 'white' : '#0a7ea4'} 
+                    />
+                    <Text className={`font-semibold text-base ${
+                      selectedLanguage === lang ? 'text-white' : 'text-foreground'
+                    }`}>
                       {lang}
                     </Text>
                   </TouchableOpacity>
                 ))}
               </View>
             )}
+            <Text className="text-xs text-muted mt-3">Changes apply immediately to all screens</Text>
           </View>
         </View>
 
